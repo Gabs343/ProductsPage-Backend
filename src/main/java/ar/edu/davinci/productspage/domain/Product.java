@@ -1,5 +1,6 @@
 package ar.edu.davinci.productspage.domain;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
@@ -25,8 +26,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
-public class Product {
+public class Product implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4709040225837229370L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
 	@GenericGenerator(name = "native", strategy = "native")
