@@ -2,7 +2,7 @@
 --	DROP OF TABLES
 --
 
-DROP TABLE IF EXIST products;
+DROP TABLE IF EXISTS products;
 
 --
 -- CREATE OF TABLES
