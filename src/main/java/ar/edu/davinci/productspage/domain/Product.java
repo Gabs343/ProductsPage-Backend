@@ -1,4 +1,4 @@
-package domain;
+package ar.edu.davinci.productspage.domain;
 
 import java.math.BigDecimal;
 

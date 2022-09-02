@@ -1,4 +1,4 @@
-package domain;
+package ar.edu.davinci.productspage.domain;
 
 public enum ProductType {
 	HEADPHONE("Headphone"),
