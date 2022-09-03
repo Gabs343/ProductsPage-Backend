@@ -14,6 +14,8 @@ public interface ProductService {
 	
 	Product update(Product product) throws BusinessException;
 	
+	Product findById(Long id) throws BusinessException;
+	
 	void delete(Product product);
 	void delete(Long id);
 	
