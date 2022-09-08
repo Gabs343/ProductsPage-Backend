@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ar.edu.davinci.productspage.domain.Product;
+import ar.edu.davinci.productspage.domain.ProductType;
 import ar.edu.davinci.productspage.exception.BusinessException;
 
 public interface ProductService {
@@ -24,4 +25,6 @@ public interface ProductService {
 	Page<Product> list(Pageable pageable);
 	
 	long count();
+	
+	List<ProductType> getProductTypes();
 }

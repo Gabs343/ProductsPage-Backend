@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ar.edu.davinci.productspage.domain.Product;
+import ar.edu.davinci.productspage.domain.ProductType;
 import ar.edu.davinci.productspage.exception.BusinessException;
 import ar.edu.davinci.productspage.repository.ProductRepository;
 
@@ -92,6 +93,12 @@ public class ProductServiceImpl implements ProductService{
 	public long count() {
 		// TODO Auto-generated method stub
 		return repository.count();
+	}
+
+	@Override
+	public List<ProductType> getProductTypes() {
+		// TODO Auto-generated method stub
+		return ProductType.getProductTypes();
 	}
 
 }
