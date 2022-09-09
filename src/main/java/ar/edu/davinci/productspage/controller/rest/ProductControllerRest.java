@@ -109,6 +109,14 @@ public class ProductControllerRest extends ShopApp{
 		}
 		
 		try {
+			product = service.save(product);
+		}catch(Exception e) {
+			LOGGER.error(e.getMessage());
+			e.printStackTrace();
+			return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
+		}
+		
+		try {
 			productResponse = mapper.map(product, ProductResponse.class);
 		}catch(Exception e) {
 			LOGGER.error(e.getMessage());
