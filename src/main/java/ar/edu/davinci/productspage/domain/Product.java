@@ -51,4 +51,8 @@ public class Product implements Serializable{
 	@Column(name = "pdt_type_product")
 	@Enumerated(EnumType.STRING)
 	private ProductType type;
+	
+	@Column(name = "pdt_ state_product")
+	@Enumerated(EnumType.STRING)
+	private ProductState state;
 }
