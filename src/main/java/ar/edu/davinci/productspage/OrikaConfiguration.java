@@ -62,7 +62,20 @@ public class OrikaConfiguration {
 			}				
 		}).register();
 		
-		mapperFactory.classMap(Product.class, ProductUpdateRequest.class).byDefault().register();
+		mapperFactory.classMap(ProductUpdateRequest.class, Product.class)
+						.customize(new CustomMapper<ProductUpdateRequest, Product>(){
+			public void mapAtoB(final ProductUpdateRequest updateRequest, final Product product, final MappingContext context) {
+				LOGGER.info("### Custom mapping for ProductUpdateRequest --> Producr ###");
+				
+				product.setName(updateRequest.getName());
+				product.setDescription(updateRequest.getDescription());
+				
+				ProductType type = ProductType.valueOf(updateRequest.getType());
+				product.setType(type);
+				
+				product.setBasePrice(updateRequest.getBasePrice());
+			}
+		}).register();;
 		
 		return mapperFactory.getMapperFacade();
 	}
