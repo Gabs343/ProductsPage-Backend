@@ -48,6 +48,9 @@ public class Product implements Serializable{
 	@Column(name = "pdt_base_price")
 	private BigDecimal basePrice;
 	
+	@Column(name = "pdt_final_price")
+	private BigDecimal finalPrice;
+	
 	@Column(name = "pdt_type_product")
 	@Enumerated(EnumType.STRING)
 	private ProductType type;
