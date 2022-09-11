@@ -21,6 +21,8 @@ public class ProductResponse {
 	
 	private String type;
 	
+	private String state;
+	
 	private BigDecimal basePrice;
 	
 	private BigDecimal finalPrice;
