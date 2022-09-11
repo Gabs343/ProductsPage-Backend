@@ -22,4 +22,6 @@ public class ProductResponse {
 	private String type;
 	
 	private BigDecimal basePrice;
+	
+	private BigDecimal finalPrice;
 }
