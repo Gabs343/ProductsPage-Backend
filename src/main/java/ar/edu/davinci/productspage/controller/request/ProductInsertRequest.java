@@ -19,5 +19,7 @@ public class ProductInsertRequest {
 	
 	private String type;
 	
+	private String state;
+	
 	private BigDecimal basePrice;
 }
