@@ -153,7 +153,9 @@ public class ProductControllerRest extends ShopApp{
 			productToModify.setName(newProduct.getName());
 			productToModify.setDescription(newProduct.getDescription());
 			productToModify.setType(newProduct.getType());
+			productToModify.setState(newProduct.getState());
 			productToModify.setBasePrice(newProduct.getBasePrice());
+			productToModify.setFinalPrice(newProduct.getFinalPrice());
 			
 			try {
 				productToModify = service.update(productToModify);
