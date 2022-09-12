@@ -11,9 +11,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import ar.edu.davinci.productspage.service.ProductStateStrategy;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -55,7 +57,10 @@ public class Product implements Serializable{
 	@Enumerated(EnumType.STRING)
 	private ProductType type;
 	
-	@Column(name = "pdt_ state_product")
+	@Column(name = "pdt_state_product")
 	@Enumerated(EnumType.STRING)
 	private ProductState state;
+	
+	@Transient
+	private ProductStateStrategy stateStrategy;
 }
