@@ -18,6 +18,7 @@ public class StrategyFactory {
 	
 	private void initStrategies() {
 		strategies.put(ProductState.NEW, new ProductNew());
+		strategies.put(ProductState.PROMOTION, new ProductPromotion());
 	}
 	
 	public ProductStateStrategy getStrategy(ProductState state) {
