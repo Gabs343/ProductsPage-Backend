@@ -13,6 +13,7 @@ CREATE TABLE PRODUCTS(
 	pdt_name varchar(255) DEFAULT NULL,
 	pdt_description varchar(255) DEFAULT NULL,
 	pdt_base_price decimal(19, 2) DEFAULT NULL,
+	pdt_final_price decimal(19, 2) DEFAULT NULL,
 	pdt_type_product varchar(255) DEFAULT NULL,
 	pdt_state_product varchar(255) DEFAULT NULL,
 	PRIMARY KEY(pdt_id)
