@@ -11,7 +11,10 @@ import ar.edu.davinci.productspage.controller.request.ProductInsertRequest;
 import ar.edu.davinci.productspage.controller.request.ProductUpdateRequest;
 import ar.edu.davinci.productspage.controller.response.ProductResponse;
 import ar.edu.davinci.productspage.domain.Product;
+import ar.edu.davinci.productspage.domain.ProductState;
 import ar.edu.davinci.productspage.domain.ProductType;
+import ar.edu.davinci.productspage.service.ProductStateStrategy;
+import ar.edu.davinci.productspage.service.StrategyFactory;
 import ma.glasnost.orika.CustomMapper;
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;
@@ -25,8 +28,11 @@ public class OrikaConfiguration {
 	
 	private final ObjectMapper objectMapper;
 	
+	private final StrategyFactory factory;
+	
 	public OrikaConfiguration() {
 		objectMapper = new ObjectMapper();
+		factory = new StrategyFactory();
 	}
 	
 	@Bean
@@ -43,7 +49,9 @@ public class OrikaConfiguration {
 				response.setName(product.getName());
 				response.setDescription(product.getDescription());
 				response.setType(product.getType().getDescription());
+				response.setState(product.getState().getDescription());
 				response.setBasePrice(product.getBasePrice());
+				response.setFinalPrice(product.getFinalPrice());
 			}
 		}).register();
 		
@@ -58,7 +66,15 @@ public class OrikaConfiguration {
 				ProductType type = ProductType.valueOf(insertRequest.getType());
 				product.setType(type);
 				
+				ProductState state = ProductState.valueOf(insertRequest.getState());
+				product.setState(state);
+				
+				ProductStateStrategy strategy = factory.getStrategy(state);
+				product.setStateStrategy(strategy);
+				
 				product.setBasePrice(insertRequest.getBasePrice());
+				
+				product.setFinalPrice(strategy.getSellPrice(product.getBasePrice()));
 			}				
 		}).register();
 		
@@ -73,7 +89,15 @@ public class OrikaConfiguration {
 				ProductType type = ProductType.valueOf(updateRequest.getType());
 				product.setType(type);
 				
+				ProductState state = ProductState.valueOf(updateRequest.getState());
+				product.setState(state);
+				
+				ProductStateStrategy strategy = factory.getStrategy(state);
+				product.setStateStrategy(strategy);
+				
 				product.setBasePrice(updateRequest.getBasePrice());
+				
+				product.setFinalPrice(strategy.getSellPrice(product.getBasePrice()));
 			}
 		}).register();;
 		
