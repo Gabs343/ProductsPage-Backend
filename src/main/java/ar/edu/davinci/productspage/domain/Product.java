@@ -15,6 +15,8 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import ar.edu.davinci.productspage.service.ProductStateStrategy;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -61,6 +63,7 @@ public class Product implements Serializable{
 	@Enumerated(EnumType.STRING)
 	private ProductState state;
 	
+	@JsonIgnore
 	@Transient
 	private ProductStateStrategy stateStrategy;
 }
