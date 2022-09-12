@@ -3,8 +3,11 @@ package ar.edu.davinci.productspage.service;
 import java.util.EnumMap;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+
 import ar.edu.davinci.productspage.domain.ProductState;
 
+@Component
 public class StrategyFactory {
 	
 	private Map<ProductState, ProductStateStrategy> strategies = new EnumMap<>(ProductState.class);
