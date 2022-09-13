@@ -9,10 +9,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ar.edu.davinci.productspage.controller.request.ProductInsertRequest;
 import ar.edu.davinci.productspage.controller.request.ProductUpdateRequest;
+import ar.edu.davinci.productspage.controller.request.StockAddRequest;
+import ar.edu.davinci.productspage.controller.request.StockRemoveRequest;
 import ar.edu.davinci.productspage.controller.response.ProductResponse;
 import ar.edu.davinci.productspage.domain.Product;
 import ar.edu.davinci.productspage.domain.ProductState;
 import ar.edu.davinci.productspage.domain.ProductType;
+import ar.edu.davinci.productspage.domain.Stock;
 import ar.edu.davinci.productspage.service.ProductStateStrategy;
 import ar.edu.davinci.productspage.service.StrategyFactory;
 import ma.glasnost.orika.CustomMapper;
@@ -52,6 +55,7 @@ public class OrikaConfiguration {
 				response.setState(product.getState().getDescription());
 				response.setBasePrice(product.getBasePrice());
 				response.setFinalPrice(product.getFinalPrice());
+				response.setQuantity(product.getQuantity());
 			}
 		}).register();
 		
@@ -75,13 +79,18 @@ public class OrikaConfiguration {
 				product.setBasePrice(insertRequest.getBasePrice());
 				
 				product.setFinalPrice(strategy.getSellPrice(product.getBasePrice()));
+			
+				Stock stock = Stock.builder().quantity(insertRequest.getQuantity()).build();
+				
+				product.setStock(stock);
+			
 			}				
 		}).register();
 		
 		mapperFactory.classMap(ProductUpdateRequest.class, Product.class)
 						.customize(new CustomMapper<ProductUpdateRequest, Product>(){
 			public void mapAtoB(final ProductUpdateRequest updateRequest, final Product product, final MappingContext context) {
-				LOGGER.info("### Custom mapping for ProductUpdateRequest --> Producr ###");
+				LOGGER.info("### Custom mapping for ProductUpdateRequest --> Product ###");
 				
 				product.setName(updateRequest.getName());
 				product.setDescription(updateRequest.getDescription());
@@ -98,8 +107,27 @@ public class OrikaConfiguration {
 				product.setBasePrice(updateRequest.getBasePrice());
 				
 				product.setFinalPrice(strategy.getSellPrice(product.getBasePrice()));
+			
 			}
 		}).register();;
+		
+		mapperFactory.classMap(StockAddRequest.class, Stock.class)
+						.customize(new CustomMapper<StockAddRequest, Stock>(){
+			public void mapAtoB(final StockAddRequest addRequest, final Stock stock, final MappingContext context) {
+				LOGGER.info("### Custom mapping for StockAddRequest --> Stock ###");
+				
+				stock.setQuantity(addRequest.getQuantity());
+			}
+		}).register();
+		
+		mapperFactory.classMap(StockRemoveRequest.class, Stock.class)
+						.customize(new CustomMapper<StockRemoveRequest, Stock>(){
+			public void mapAtoB(final StockRemoveRequest removeRequest, final Stock stock, final MappingContext context) {
+				LOGGER.info("### Custom mapping for StocRemoveRequest --> Stock ###");
+
+				stock.setQuantity(removeRequest.getQuantity());
+			}
+		}).register();
 		
 		return mapperFactory.getMapperFacade();
 	}
