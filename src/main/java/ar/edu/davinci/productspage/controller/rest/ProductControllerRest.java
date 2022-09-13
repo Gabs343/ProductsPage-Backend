@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ar.edu.davinci.productspage.controller.request.ProductInsertRequest;
 import ar.edu.davinci.productspage.controller.request.ProductUpdateRequest;
 import ar.edu.davinci.productspage.controller.request.StockAddRequest;
+import ar.edu.davinci.productspage.controller.request.StockRemoveRequest;
 import ar.edu.davinci.productspage.controller.response.ProductResponse;
 import ar.edu.davinci.productspage.domain.Product;
 import ar.edu.davinci.productspage.domain.Stock;
@@ -190,7 +191,7 @@ public class ProductControllerRest extends ShopApp{
 	}
 	
 	@PutMapping("/products/{id}/stocks/add")
-	public ResponseEntity<Object> updateStock(@PathVariable("id") Long id, @RequestBody StockAddRequest stockData){
+	public ResponseEntity<Object> addingQuantityToStock(@PathVariable("id") Long id, @RequestBody StockAddRequest stockData){
 		
 		Product productToModify = null;
 		Stock newStock = null;
@@ -214,6 +215,62 @@ public class ProductControllerRest extends ShopApp{
 		
 		if(Objects.nonNull(newStock)) {
 			productToModify.addQuantity(newStock.getQuantity());
+			
+			try {
+				productToModify = service.update(productToModify);
+			}catch(BusinessException e){			
+				LOGGER.error(e.getMessage());
+				e.printStackTrace();
+				return new ResponseEntity<>(e.getMessage(), HttpStatus.EXPECTATION_FAILED);
+			}catch(Exception e) {
+				LOGGER.error(e.getMessage());
+				
+				e.printStackTrace();
+				
+				return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
+			}
+			
+		}else {
+			LOGGER.error("The Stock to modify is null");
+			
+			return new ResponseEntity<>(null, HttpStatus.CREATED);
+		}
+		
+		try {
+			productResponse = mapper.map(productToModify, ProductResponse.class);
+		}catch(Exception e) {
+			LOGGER.error(e.getMessage());
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<>(productResponse, HttpStatus.CREATED);
+	}
+	
+	@PutMapping("/products/{id}/stocks/remove")
+	public ResponseEntity<Object> removingQuantityToStock(@PathVariable("id") Long id, @RequestBody StockRemoveRequest stockData){
+		
+		Product productToModify = null;
+		Stock newStock = null;
+		ProductResponse productResponse = null;
+		
+		try {
+			newStock = mapper.map(stockData, Stock.class);
+		}catch(Exception e) {
+			LOGGER.error(e.getMessage());
+			e.printStackTrace();
+		}
+		
+		try {
+			productToModify = service.findById(id);
+		}catch(Exception e) {
+			LOGGER.error(e.getMessage());
+			e.printStackTrace();
+			
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+		}
+		
+		if(Objects.nonNull(newStock)) {
+			productToModify.removeQuantity(newStock.getQuantity());
 			
 			try {
 				productToModify = service.update(productToModify);
