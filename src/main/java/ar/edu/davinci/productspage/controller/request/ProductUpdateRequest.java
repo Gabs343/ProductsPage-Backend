@@ -21,4 +21,5 @@ public class ProductUpdateRequest {
 	private String state;
 	
 	private BigDecimal basePrice;
+	
 }

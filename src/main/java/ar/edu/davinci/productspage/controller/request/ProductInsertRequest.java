@@ -22,4 +22,6 @@ public class ProductInsertRequest {
 	private String state;
 	
 	private BigDecimal basePrice;
+	
+	private Integer quantity;
 }
