@@ -26,4 +26,6 @@ public class ProductResponse {
 	private BigDecimal basePrice;
 	
 	private BigDecimal finalPrice;
+	
+	private Integer quantity;
 }
