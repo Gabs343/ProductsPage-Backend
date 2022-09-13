@@ -3,13 +3,17 @@ package ar.edu.davinci.productspage.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -66,4 +70,21 @@ public class Product implements Serializable{
 	@JsonIgnore
 	@Transient
 	private ProductStateStrategy stateStrategy;
+	
+	@JsonIgnore
+	@OneToOne(targetEntity = Stock.class, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@JoinColumn(name="pdt_stock_id", referencedColumnName="stk_id", nullable=false)
+	private Stock stock;
+	
+	public void addQuantity(Integer addQuantity) {
+		stock.addQuantity(addQuantity);;
+	}
+
+	public void removeQuantity(Integer removeQuantity) {
+		stock.removeQuantity(removeQuantity);;
+	}
+	
+	public Integer getQuantity() {
+		return stock.getQuantity();
+	}
 }
