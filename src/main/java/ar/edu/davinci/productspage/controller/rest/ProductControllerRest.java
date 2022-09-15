@@ -270,21 +270,27 @@ public class ProductControllerRest extends ShopApp{
 		}
 		
 		if(Objects.nonNull(newStock)) {
-			productToModify.removeQuantity(newStock.getQuantity());
-			
-			try {
-				productToModify = service.update(productToModify);
-			}catch(BusinessException e){			
-				LOGGER.error(e.getMessage());
-				e.printStackTrace();
-				return new ResponseEntity<>(e.getMessage(), HttpStatus.EXPECTATION_FAILED);
-			}catch(Exception e) {
-				LOGGER.error(e.getMessage());
+			if(newStock.getQuantity() <= productToModify.getQuantity()) {
+				productToModify.removeQuantity(newStock.getQuantity());
 				
-				e.printStackTrace();
-				
-				return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
+				try {
+					productToModify = service.update(productToModify);
+				}catch(BusinessException e){			
+					LOGGER.error(e.getMessage());
+					e.printStackTrace();
+					return new ResponseEntity<>(e.getMessage(), HttpStatus.EXPECTATION_FAILED);
+				}catch(Exception e) {
+					LOGGER.error(e.getMessage());
+					
+					e.printStackTrace();
+					
+					return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
+				}
+			}else {
+				LOGGER.error("ERROR");
+				return new ResponseEntity<>(null, HttpStatus.CREATED);
 			}
+			
 			
 		}else {
 			LOGGER.error("The Stock to modify is null");
