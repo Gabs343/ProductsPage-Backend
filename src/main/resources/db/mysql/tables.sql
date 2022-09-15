@@ -8,6 +8,8 @@ DROP TABLE IF EXISTS stocks;
 
 DROP TABLE IF EXISTS users;
 
+DROP TABLE IF EXISTS items_sale;
+
 --
 -- CREATE OF TABLES
 --
@@ -38,4 +40,12 @@ CREATE TABLE USERS(
 	usr_mail varchar(255) DEFAULT NULL,
 	usr_type_user varchar(255) DEFAULT NULL,
 	PRIMARY KEY(usr_id)
+);
+
+CREATE TABLE ITEMS_SALE(
+	itm_id bigint NOT NULL AUTO_INCREMENT,
+	itm_quantity INT DEFAULT NULL,
+	itm_pdt_id bigint NOT NULL,
+	CONSTRAINT itm_pdt_fk FOREIGN KEY (itm_pdt_fk) REFERENCES products(pdt_id)
+	PRIMARY KEY(itm_id)
 );
