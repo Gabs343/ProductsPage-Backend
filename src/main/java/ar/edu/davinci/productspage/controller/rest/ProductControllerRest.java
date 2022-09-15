@@ -287,7 +287,7 @@ public class ProductControllerRest extends ShopApp{
 					return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
 				}
 			}else {
-				LOGGER.error("ERROR");
+				LOGGER.error("The Stock dont have that quantity of products...");
 				return new ResponseEntity<>(null, HttpStatus.CREATED);
 			}
 			
