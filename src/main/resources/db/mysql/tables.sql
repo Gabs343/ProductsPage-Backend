@@ -6,6 +6,8 @@ DROP TABLE IF EXISTS products;
 
 DROP TABLE IF EXISTS stocks;
 
+DROP TABLE IF EXISTS users;
+
 --
 -- CREATE OF TABLES
 --
@@ -27,4 +29,13 @@ CREATE TABLE PRODUCTS(
 	pdt_stock_id bigint NOT NULL,
 	CONSTRAINT pdt_stock_fk FOREIGN KEY (pdt_stock_id) REFERENCES stocks(stk_id),
 	PRIMARY KEY(pdt_id)	
+);
+
+CREATE TABLE USERS(
+	usr_id bigint NOT NULL AUTO_INCREMENT,
+	usr_name varchar(25) DEFAULT NULL,
+	usr_lastname varchar(255) DEFAULT NULL,
+	usr_mail varchar(255) DEFAULT NULL,
+	usr_type varchar(255) DEFAULT NULL,
+	PRIMARY KEY(usr_id)
 );
