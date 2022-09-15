@@ -11,11 +11,16 @@ import ar.edu.davinci.productspage.controller.request.ProductInsertRequest;
 import ar.edu.davinci.productspage.controller.request.ProductUpdateRequest;
 import ar.edu.davinci.productspage.controller.request.StockAddRequest;
 import ar.edu.davinci.productspage.controller.request.StockRemoveRequest;
+import ar.edu.davinci.productspage.controller.request.UserInsertRequest;
+import ar.edu.davinci.productspage.controller.request.UserUpdateRequest;
 import ar.edu.davinci.productspage.controller.response.ProductResponse;
+import ar.edu.davinci.productspage.controller.response.UserResponse;
 import ar.edu.davinci.productspage.domain.Product;
 import ar.edu.davinci.productspage.domain.ProductState;
 import ar.edu.davinci.productspage.domain.ProductType;
 import ar.edu.davinci.productspage.domain.Stock;
+import ar.edu.davinci.productspage.domain.User;
+import ar.edu.davinci.productspage.domain.UserType;
 import ar.edu.davinci.productspage.service.ProductStateStrategy;
 import ar.edu.davinci.productspage.service.StrategyFactory;
 import ma.glasnost.orika.CustomMapper;
@@ -126,6 +131,48 @@ public class OrikaConfiguration {
 				LOGGER.info("### Custom mapping for StocRemoveRequest --> Stock ###");
 
 				stock.setQuantity(removeRequest.getQuantity());
+			}
+		}).register();
+		
+		//USER
+		mapperFactory.classMap(User.class, UserResponse.class)
+						.customize(new CustomMapper<User, UserResponse>(){
+			public void mapAtoB(final User user, final UserResponse response, final MappingContext context) {
+				LOGGER.info("### Custom mapping for User --> UserResponse ###");
+				
+				response.setId(user.getId());
+				response.setName(user.getName());
+				response.setLastname(user.getLastname());
+				response.setMail(user.getMail());
+				response.setType(user.getType().getDescription());
+			}
+		}).register();;
+		
+		mapperFactory.classMap(UserInsertRequest.class, User.class)
+						.customize(new CustomMapper<UserInsertRequest, User>(){
+			public void mapAtoB(final UserInsertRequest insertRequest, final User user, final MappingContext context) {
+				LOGGER.info("### Custom mapping for UserInsertRequest --> User");
+				
+				user.setName(insertRequest.getName());
+				user.setLastname(insertRequest.getLastname());
+				user.setMail(insertRequest.getMail());
+				
+				UserType type = UserType.valueOf(insertRequest.getType());
+				user.setType(type);
+			}
+		}).register();
+		
+		mapperFactory.classMap(UserUpdateRequest.class, User.class)
+					.customize(new CustomMapper<UserUpdateRequest, User>(){
+			public void mapAtoB(final UserUpdateRequest updateRequest, final User user, final MappingContext context) {
+				LOGGER.info("### Custom mapping for UserUpdateRequest --> User");
+
+				user.setName(updateRequest.getName());
+				user.setLastname(updateRequest.getLastname());
+				user.setMail(updateRequest.getMail());
+
+				UserType type = UserType.valueOf(updateRequest.getType());
+				user.setType(type);
 			}
 		}).register();
 		
