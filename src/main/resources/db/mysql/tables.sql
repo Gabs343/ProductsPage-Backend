@@ -36,6 +36,6 @@ CREATE TABLE USERS(
 	usr_name varchar(25) DEFAULT NULL,
 	usr_lastname varchar(255) DEFAULT NULL,
 	usr_mail varchar(255) DEFAULT NULL,
-	usr_type varchar(255) DEFAULT NULL,
+	usr_type_user varchar(255) DEFAULT NULL,
 	PRIMARY KEY(usr_id)
 );
