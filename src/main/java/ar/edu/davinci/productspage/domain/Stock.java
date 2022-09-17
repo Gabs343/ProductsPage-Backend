@@ -1,7 +1,5 @@
 package ar.edu.davinci.productspage.domain;
 
-import java.math.BigDecimal;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +9,6 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import ar.edu.davinci.productspage.service.ProductStateStrategy;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
