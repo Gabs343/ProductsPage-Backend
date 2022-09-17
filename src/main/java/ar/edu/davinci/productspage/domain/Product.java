@@ -72,7 +72,7 @@ public class Product implements Serializable{
 	private ProductStateStrategy stateStrategy;
 	
 	@JsonIgnore
-	@OneToOne(targetEntity = Stock.class, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@OneToOne(targetEntity = Stock.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval  = true)
 	@JoinColumn(name="pdt_stock_id", referencedColumnName="stk_id", nullable=false)
 	private Stock stock;
 	
