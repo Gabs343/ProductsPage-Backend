@@ -2,6 +2,8 @@
 --	DROP OF TABLES
 --
 
+DROP TABLE IF EXISTS credit_sales;
+
 DROP TABLE IF EXISTS cash_sales;
 
 DROP TABLE IF EXISTS items_sale;
@@ -69,5 +71,13 @@ CREATE TABLE ITEMS_SALE(
 CREATE TABLE CASH_SALES(
 	sle_id bigint NOT NULL,
 	CONSTRAINT csl_sle_fk FOREIGN KEY (sle_id) REFERENCES sales (sle_id),
+	PRIMARY KEY (sle_id)
+);
+
+CREATE TABLE CREDIT_SALES(
+	sle_id bigint NOT NULL,
+	cdt_fees_amount INT DEFAULT NULL,
+	cdt_coefficient INT DEFAULT NULL,
+	CONSTRAINT cdt_sle_fk FOREIGN KEY (sle_id) REFERENCES sales (sle_id),
 	PRIMARY KEY (sle_id)
 );
