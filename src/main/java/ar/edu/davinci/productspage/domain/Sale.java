@@ -36,7 +36,7 @@ import lombok.experimental.SuperBuilder;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
-@DiscriminatorColumn(name="sales_type")
+@DiscriminatorColumn(name="sle_type_sales")
 @Table(name="sales")
 
 @NoArgsConstructor
