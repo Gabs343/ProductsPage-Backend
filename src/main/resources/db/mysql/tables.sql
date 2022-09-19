@@ -2,13 +2,18 @@
 --	DROP OF TABLES
 --
 
+DROP TABLE IF EXISTS cash_sales;
+
+DROP TABLE IF EXISTS items_sale;
+
+DROP TABLE IF EXISTS sales;
+
 DROP TABLE IF EXISTS products;
 
 DROP TABLE IF EXISTS stocks;
 
 DROP TABLE IF EXISTS users;
 
-DROP TABLE IF EXISTS items_sale;
 
 --
 -- CREATE OF TABLES
@@ -42,10 +47,27 @@ CREATE TABLE USERS(
 	PRIMARY KEY(usr_id)
 );
 
+CREATE TABLE SALES(
+	sle_id bigint NOT NULL AUTO_INCREMENT,
+	sle_types_sales varchar(30) NOT NULL,
+	sle_date datetime(6) DEFAULT NULL,
+	sle_usr_id bigint NOT NULL,
+	CONSTRAINT sle_usr_fk FOREIGN KEY (sle_usr_id) REFERENCES users (usr_id),
+	PRIMARY KEY (sle_id)
+);
+
 CREATE TABLE ITEMS_SALE(
 	itm_id bigint NOT NULL AUTO_INCREMENT,
 	itm_quantity INT DEFAULT NULL,
 	itm_pdt_id bigint NOT NULL,
-	CONSTRAINT itm_pdt_fk FOREIGN KEY (itm_pdt_fk) REFERENCES products(pdt_id)
+	itm_sle_id bigint NOT NULL,
+	CONSTRAINT itm_pdt_fk FOREIGN KEY (itm_pdt_id) REFERENCES products(pdt_id),
+	CONSTRAINT itm_sle_fk FOREIGN KEY (itm_sle_id) REFERENCES sales (sle_id),
 	PRIMARY KEY(itm_id)
+);
+
+CREATE TABLE CASH_SALES(
+	sle_id bigint NOT NULL,
+	CONSTRAINT csl_sle_fk FOREIGN KEY (sle_id) REFERENCES sales (sle_id),
+	PRIMARY KEY (sle_id)
 );
