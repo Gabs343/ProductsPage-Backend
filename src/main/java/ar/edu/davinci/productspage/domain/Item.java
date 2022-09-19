@@ -1,6 +1,7 @@
 package ar.edu.davinci.productspage.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -44,4 +47,13 @@ public class Item implements Serializable{/**
 	@ManyToOne(targetEntity = Product.class, cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name = "itm_pdt_id", referencedColumnName = "pdt_id", nullable = false)
 	private Product product;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "itm_sle_id", referencedColumnName = "sle_id", nullable = false)
+	@JsonBackReference
+	private Sale sale;
+	
+	public BigDecimal getPrice() {
+		return product.getFinalPrice().multiply(new BigDecimal(quantity));
+	}
 }
